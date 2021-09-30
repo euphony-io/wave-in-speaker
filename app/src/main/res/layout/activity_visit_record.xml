@@ -16,14 +16,14 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_visit_record"
+            android:id="@+id/tb_visit_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme">
             <TextView
-                android:id="@+id/textView_visit_record"
+                android:id="@+id/tv_visit_record_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -34,16 +34,16 @@
         </androidx.appcompat.widget.Toolbar>
 
         <View
-            android:id="@+id/view_visit_record"
+            android:id="@+id/v_visit_record_border"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/visit_record_black" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_visit_record"
+            android:id="@+id/rv_visit_record_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/visit_record_recyclerview_layout" />
+            tools:listitem="@layout/recyclerview_layout_visit_record" />
     </LinearLayout>
 
 

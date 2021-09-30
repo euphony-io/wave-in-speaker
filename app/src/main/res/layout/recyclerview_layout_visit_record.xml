@@ -12,7 +12,7 @@
 
         <!--날짜-->
         <TextView
-            android:id="@+id/date_recyclerview"
+            android:id="@+id/tv_recyclerview_layout_date"
             android:text="@string/visit_record_sample_date"
             android:layout_width="137dp"
             android:layout_height="19.25dp"
@@ -23,7 +23,7 @@
 
         <!--주소-->
         <TextView
-            android:id="@+id/address_recyclerview"
+            android:id="@+id/tv_recyclerview_layout_address"
             android:text="@string/visit_record_sample_address"
             android:layout_width="322dp"
             android:layout_height="19.25dp"
