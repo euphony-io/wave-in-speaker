@@ -6,4 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".VisitRecordActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout_visit_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_visit_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
+            <TextView
+                android:id="@+id/textView_visit_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/visit_record_title"
+                android:textSize="16sp"
+                android:textColor="@color/visit_record_black" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/view_visit_record"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/visit_record_black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_visit_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/visit_record_recyclerview_layout" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
