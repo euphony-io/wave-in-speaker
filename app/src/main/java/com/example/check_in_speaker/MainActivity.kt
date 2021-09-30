@@ -137,11 +137,27 @@ class MainActivity : AppCompatActivity(){
             buttonVisibility(isClicked)
             mainViewModel.onClickCheckInButton()
         }
-        setInitVolume()
+        setVolumePauseAndDestroy()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        setInitVolume()
+        setVolumePauseAndDestroy()
+    }
+
+    private fun isVolumeSameInitVolume() : Boolean {
+        val nowVolume = audioManager.getStreamVolume(
+            AudioManager.STREAM_MUSIC
+        )
+
+        return initVolume == nowVolume
+    }
+
+    private fun setVolumePauseAndDestroy() {
+        if(!isVolumeSameInitVolume()) {
+            setInitVolume()
+        } else {
+            mainViewModel.focusStatusIsFailed()
+        }
     }
 }
