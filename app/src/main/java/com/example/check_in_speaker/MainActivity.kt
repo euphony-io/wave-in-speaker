@@ -7,18 +7,23 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.check_in_speaker.databinding.ActivityMainBinding
+import com.example.check_in_speaker.db.User
 import com.example.check_in_speaker.viewmodel.MainViewModel
+import com.example.check_in_speaker.viewmodel.UserViewModelFactory
 
 class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var audioFocusRequest: AudioFocusRequest
     private lateinit var audioManager: AudioManager
+    private val mainViewModel: MainViewModel by viewModels {
+        UserViewModelFactory((application as MainApplication).repository)
+    }
 
     private var isClicked : Boolean = false
     private var initVolume = 0
@@ -39,12 +44,20 @@ class MainActivity : AppCompatActivity(){
         val view = binding.root
         setContentView(view)
 
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         initAudioManager()
 
         mainViewModel.isClickCheckInButton.observe(this) {
             isClicked = it
         }
+
+        /**
+         * TODO() user 정보 가져오기.
+         */
+        mainViewModel.allUser.observe(this, { users ->
+            users?.let {
+                Log.d("LOG", users[0].address + " " + users[0].date)
+            }
+        })
 
         binding.btnMainCheckin.setOnClickListener {
             clickCheckIn()
@@ -78,6 +91,11 @@ class MainActivity : AppCompatActivity(){
 
     private fun clickCheckIn() {
         if (isClicked) {
+            /**
+             * TODO() user 정보 데이터베이스에 저장
+             */
+            val user = User(null, "seoul", "20211003")
+            mainViewModel.insertUser(user)
             setAudioFocusRequest()
         } else {
             setInitVolume()
