@@ -7,6 +7,4 @@
     <string name="main_btn_start_checkin">체크인 시작</string>
     <string name="main_btn_stop_checkin">체크인 종료</string>
     <string name="visit_record_title">방문 기록</string>
-    <string name="visit_record_sample_date">2021-09-28 00:10</string>
-    <string name="visit_record_sample_address">대한민국 서울특별시 서초구 우면동 성촌길33</string>
 </resources>
