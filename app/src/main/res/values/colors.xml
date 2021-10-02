@@ -10,4 +10,7 @@
     <color name="main_black">#FF44444A</color>
     <color name="light_sky_blue">#FFDAEDFF</color>
     <color name="sky_blue">#FF57AEFF</color>
+    <color name="light_gray">#EAEAEA</color>
+    <color name="line_gray">#DDDDDD</color>
+    <color name="mid_gray">#898989</color>
 </resources>

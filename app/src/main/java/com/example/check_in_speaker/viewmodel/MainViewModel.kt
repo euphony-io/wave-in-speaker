@@ -13,6 +13,10 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     val isClickCheckInButton : LiveData<Boolean>
         get() = _isClickCheckInButton
 
+    private val _isValidSafeNumber = MutableLiveData<Boolean>()
+    val isValidSafeNumber: LiveData<Boolean>
+      get() = _isValidSafeNumber
+
     private val mTxManager: EuTxManager by lazy {
         EuTxManager()
     }
@@ -21,6 +25,12 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun onClickCheckInButton() {
         _isClickCheckInButton.value = _isClickCheckInButton.value != true
+    }
+
+    private val safeNumberFormat = Regex("^[가-힣][0-9]{2}[가-힣][0-9]{2}\$")
+
+    fun isValidSafeNumber(safeNumber: String){
+        _isValidSafeNumber.value = safeNumber.matches(safeNumberFormat)
     }
 
     fun focusStatusIsFailed() {
