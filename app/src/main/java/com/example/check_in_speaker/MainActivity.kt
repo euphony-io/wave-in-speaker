@@ -16,19 +16,19 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.Toast
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.check_in_speaker.databinding.ActivityMainBinding
 import com.example.check_in_speaker.databinding.DialogSafeNumberBinding
-import com.example.check_in_speaker.util.PreferencesUtil
 import com.example.check_in_speaker.db.User
+import com.example.check_in_speaker.util.PreferencesUtil
 import com.example.check_in_speaker.viewmodel.MainViewModel
 import com.example.check_in_speaker.viewmodel.UserViewModelFactory
 import com.google.android.gms.maps.model.LatLng
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(){
     private var dialogBinding: DialogSafeNumberBinding? = null
     private var isClicked : Boolean = false
     private var initVolume = 0
-    private var safeNumber = "hello"
+    private var safeNumber = ""
     private var currentPosition: LatLng? = null
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
     private var audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -94,15 +94,6 @@ class MainActivity : AppCompatActivity(){
                 Toast.makeText(this, "유효하지 않는 안심번호입니다. 다시 확인해주세요.", Toast.LENGTH_LONG).show()
             }
         }
-
-        /**
-         * TODO() user 정보 가져오기.
-         */
-        mainViewModel.allUser.observe(this, { users ->
-            users?.let {
-//                Log.d("LOG", users[0].address + " " + users[0].date)
-            }
-        })
 
         binding.btnMainCheckin.setOnClickListener {
             if(checkFindLocationPermission()){
@@ -179,10 +170,6 @@ class MainActivity : AppCompatActivity(){
         }
 
         if (isClicked) {
-            /**
-             * TODO() user 정보 데이터베이스에 저장
-             */
-
             if(address != null){
                 val user = User(null, address, getCurrentDate())
                 mainViewModel.insertUser(user)
@@ -213,14 +200,12 @@ class MainActivity : AppCompatActivity(){
         return dateFormat.format(date)
     }
 
-    /**
-     * TODO Modify 'safeNumber' (change SharedPreference value)
-     */
     @SuppressLint("NewApi")
     private fun setAudioFocusRequest() {
         when(audioManager.requestAudioFocus(audioFocusRequest)) {
             AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
                 setCheckInVolume()
+                safeNumber = prefs.getString("safeNumber", "")
                 mainViewModel.focusStatusIsGranted(safeNumber)
             }
             AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
