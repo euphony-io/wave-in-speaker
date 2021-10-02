@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey(autoGenerate = true) var id : Long? = 0,
     @ColumnInfo(name = "address") var address: String = "",
-    @ColumnInfo(name = "date") var date: Long = 0
+    @ColumnInfo(name = "date") var date: String = ""
 )

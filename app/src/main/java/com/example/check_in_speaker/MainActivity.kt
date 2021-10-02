@@ -11,8 +11,6 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.check_in_speaker.databinding.ActivityMainBinding
 import com.example.check_in_speaker.db.User
 import com.example.check_in_speaker.viewmodel.MainViewModel
@@ -96,7 +94,7 @@ class MainActivity : AppCompatActivity(){
             /**
              * TODO() user 정보 데이터베이스에 저장
              */
-            val user = User(null, "seoul", 20211003)
+            val user = User(null, "seoul", "20211003")
             mainViewModel.insertUser(user)
             setAudioFocusRequest()
         } else {
