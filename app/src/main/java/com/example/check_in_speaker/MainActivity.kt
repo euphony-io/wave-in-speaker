@@ -1,11 +1,16 @@
 package com.example.check_in_speaker
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Geocoder
+import android.location.LocationListener
+import android.location.LocationManager
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -18,12 +23,17 @@ import android.widget.Toast
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.check_in_speaker.databinding.ActivityMainBinding
 import com.example.check_in_speaker.databinding.DialogSafeNumberBinding
 import com.example.check_in_speaker.util.PreferencesUtil
 import com.example.check_in_speaker.db.User
 import com.example.check_in_speaker.viewmodel.MainViewModel
 import com.example.check_in_speaker.viewmodel.UserViewModelFactory
+import com.google.android.gms.maps.model.LatLng
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(){
 
@@ -40,6 +50,8 @@ class MainActivity : AppCompatActivity(){
     private var isClicked : Boolean = false
     private var initVolume = 0
     private var safeNumber = "hello"
+    private var currentPosition: LatLng? = null
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
     private var audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
         if(focusChange == AudioManager.AUDIOFOCUS_GAIN || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
             if(!isClicked) {
@@ -50,6 +62,16 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    private val locationManager by lazy {
+        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    private val locationListener = LocationListener {
+        it.let {
+            currentPosition = LatLng(it.latitude, it.longitude)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,6 +79,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(view)
 
         initAudioManager()
+        updateCurrentLocation()
 
         mainViewModel.isClickCheckInButton.observe(this) {
             isClicked = it
@@ -71,7 +94,7 @@ class MainActivity : AppCompatActivity(){
                 Toast.makeText(this, "유효하지 않는 안심번호입니다. 다시 확인해주세요.", Toast.LENGTH_LONG).show()
             }
         }
-        
+
         /**
          * TODO() user 정보 가져오기.
          */
@@ -82,13 +105,17 @@ class MainActivity : AppCompatActivity(){
         })
 
         binding.btnMainCheckin.setOnClickListener {
-            clickCheckIn()
+            if(checkFindLocationPermission()){
+                clickCheckIn()
+            }else{
+                requestGPSPermission()
+            }
         }
 
         binding.tvMainVisitRecordHistory.setOnClickListener {
             startActivity(Intent(this, VisitRecordActivity::class.java))
         }
-        
+
         prefs = PreferencesUtil(applicationContext)
 
         if(prefs.getString("safeNumber","") == ""){
@@ -96,6 +123,28 @@ class MainActivity : AppCompatActivity(){
             dialog.show()
         }else{
             binding.tvMainSafeNumber.text = prefs.getString("safeNumber", "")
+        }
+    }
+
+    private fun updateCurrentLocation(){
+        if(checkFindLocationPermission()){
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                2000,
+                1f,
+                locationListener
+            )
+
+            if(currentPosition == null){
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    4000,
+                    1f,
+                    locationListener
+                )
+            }
+        }else{
+            requestGPSPermission()
         }
     }
 
@@ -125,19 +174,43 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun clickCheckIn() {
+        val address = currentPosition?.let {
+            getAddress(it)
+        }
+
         if (isClicked) {
             /**
              * TODO() user 정보 데이터베이스에 저장
              */
-            val user = User(null, "seoul", "20211003")
-            mainViewModel.insertUser(user)
-            setAudioFocusRequest()
+
+            if(address != null){
+                val user = User(null, address, getCurrentDate())
+                mainViewModel.insertUser(user)
+                setAudioFocusRequest()
+            }else{
+                updateCurrentLocation()
+                Toast.makeText(this, "현재 위치 불러오기에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
         } else {
             setInitVolume()
         }
 
-        buttonVisibility(isClicked)
-        mainViewModel.onClickCheckInButton()
+        if(address != null){
+            buttonVisibility(isClicked)
+            mainViewModel.onClickCheckInButton()
+        }
+    }
+
+    private fun getAddress(position: LatLng): String? {
+        val geocoder = Geocoder(this, Locale.KOREA)
+        return geocoder.getFromLocation(position.latitude, position.longitude, 1).first()
+            .getAddressLine(0)
+    }
+
+    private fun getCurrentDate(): String{
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        return dateFormat.format(date)
     }
 
     /**
@@ -154,6 +227,21 @@ class MainActivity : AppCompatActivity(){
                 return
             }
         }
+    }
+
+    private fun checkFindLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            baseContext,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestGPSPermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_REQUEST_CODE
+        )
     }
 
     private fun setCheckInVolume() {
@@ -228,5 +316,9 @@ class MainActivity : AppCompatActivity(){
         dialogBinding!!.dialogTvOk.setOnClickListener {
             mainViewModel.isValidSafeNumber(dialogBinding!!.dialogEtSafeNumber.text.toString())
         }
+    }
+
+    companion object {
+        const val PERMISSION_REQUEST_CODE = 2021
     }
 }
