@@ -3,6 +3,7 @@ package com.example.check_in_speaker
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioAttributes
@@ -82,6 +83,10 @@ class MainActivity : AppCompatActivity(){
 
         binding.btnMainCheckin.setOnClickListener {
             clickCheckIn()
+        }
+
+        binding.tvMainVisitRecordHistory.setOnClickListener {
+            startActivity(Intent(this, VisitRecordActivity::class.java))
         }
         
         prefs = PreferencesUtil(applicationContext)
