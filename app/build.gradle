@@ -71,4 +71,7 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-paging:2.4.0-alpha05"
+
+    // LatLng
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
