@@ -1,11 +1,13 @@
 package com.example.check_in_speaker.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.check_in_speaker.db.User
+import com.example.check_in_speaker.repository.UserRepository
 import euphony.lib.transmitter.EuTxManager
+import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
     private var _isClickCheckInButton = MutableLiveData(true)
     val isClickCheckInButton : LiveData<Boolean>
@@ -18,6 +20,8 @@ class MainViewModel : ViewModel() {
     private val mTxManager: EuTxManager by lazy {
         EuTxManager()
     }
+
+    val allUser: LiveData<List<User>> = repository.allUsers.asLiveData()
 
     fun onClickCheckInButton() {
         _isClickCheckInButton.value = _isClickCheckInButton.value != true
@@ -38,5 +42,17 @@ class MainViewModel : ViewModel() {
         mTxManager.process(-1)
     }
 
+    fun insertUser(user: User) = viewModelScope.launch {
+        repository.insert(user)
+    }
+}
 
+class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

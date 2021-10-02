@@ -14,21 +14,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.Toast
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.check_in_speaker.databinding.ActivityMainBinding
 import com.example.check_in_speaker.databinding.DialogSafeNumberBinding
 import com.example.check_in_speaker.util.PreferencesUtil
+import com.example.check_in_speaker.db.User
 import com.example.check_in_speaker.viewmodel.MainViewModel
+import com.example.check_in_speaker.viewmodel.UserViewModelFactory
 
 class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var audioFocusRequest: AudioFocusRequest
     private lateinit var audioManager: AudioManager
     private lateinit var dialog: Dialog
     private lateinit var prefs: PreferencesUtil
+    private val mainViewModel: MainViewModel by viewModels {
+        UserViewModelFactory((application as MainApplication).repository)
+    }
 
     private var dialogBinding: DialogSafeNumberBinding? = null
     private var isClicked : Boolean = false
@@ -50,7 +56,6 @@ class MainActivity : AppCompatActivity(){
         val view = binding.root
         setContentView(view)
 
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         initAudioManager()
 
         mainViewModel.isClickCheckInButton.observe(this) {
@@ -66,6 +71,15 @@ class MainActivity : AppCompatActivity(){
                 Toast.makeText(this, "유효하지 않는 안심번호입니다. 다시 확인해주세요.", Toast.LENGTH_LONG).show()
             }
         }
+        
+        /**
+         * TODO() user 정보 가져오기.
+         */
+        mainViewModel.allUser.observe(this, { users ->
+            users?.let {
+                Log.d("LOG", users[0].address + " " + users[0].date)
+            }
+        })
 
         binding.btnMainCheckin.setOnClickListener {
             clickCheckIn()
@@ -108,6 +122,11 @@ class MainActivity : AppCompatActivity(){
 
     private fun clickCheckIn() {
         if (isClicked) {
+            /**
+             * TODO() user 정보 데이터베이스에 저장
+             */
+            val user = User(null, "seoul", "20211003")
+            mainViewModel.insertUser(user)
             setAudioFocusRequest()
         } else {
             setInitVolume()
