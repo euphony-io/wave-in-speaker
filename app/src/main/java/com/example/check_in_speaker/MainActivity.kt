@@ -15,7 +15,6 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.check_in_speaker.databinding.ActivityMainBinding
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity(){
          */
         mainViewModel.allUser.observe(this, { users ->
             users?.let {
-                Log.d("LOG", users[0].address + " " + users[0].date)
+//                Log.d("LOG", users[0].address + " " + users[0].date)
             }
         })
 
