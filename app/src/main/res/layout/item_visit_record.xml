@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--날짜-->
+    <TextView
+        android:id="@+id/tv_recyclerview_layout_date"
+        style="@style/Regular14Black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        tools:text="2021-09-28 00:10" />
+
+    <!--주소-->
+    <TextView
+        android:id="@+id/tv_recyclerview_layout_address"
+        style="@style/Regular14Black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="14dp"
+        android:gravity="center_vertical"
+        tools:text="대한민국 서울특별시 서초구 우면동 성촌길33" />
+
+</LinearLayout>
