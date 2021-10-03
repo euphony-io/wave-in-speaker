@@ -7,6 +7,13 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="Bold16Black">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/main_black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="Regular16Black">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>
@@ -18,6 +25,13 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/mid_gray</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Regular14Black">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/main_black</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
