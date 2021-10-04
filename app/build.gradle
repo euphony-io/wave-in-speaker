@@ -76,4 +76,7 @@ dependencies {
 
     // LatLng
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // SpinKit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
