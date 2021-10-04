@@ -31,6 +31,8 @@ import com.example.check_in_speaker.db.User
 import com.example.check_in_speaker.util.PreferencesUtil
 import com.example.check_in_speaker.viewmodel.MainViewModel
 import com.example.check_in_speaker.viewmodel.UserViewModelFactory
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.FadingCircle
 import com.google.android.gms.maps.model.LatLng
 import java.text.SimpleDateFormat
 import java.util.*
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity(){
         val view = binding.root
         setContentView(view)
 
+        initLoadingDialog()
         initAudioManager()
         updateCurrentLocation()
 
@@ -137,6 +140,12 @@ class MainActivity : AppCompatActivity(){
         }else{
             requestGPSPermission()
         }
+    }
+
+    private fun initLoadingDialog() {
+        val fadingCircle: Sprite = FadingCircle()
+        fadingCircle.color = resources.getColor(R.color.sky_blue, null)
+        binding.progressBarMainCheckin.setIndeterminateDrawable(fadingCircle)
     }
 
     private fun initAudioManager() {

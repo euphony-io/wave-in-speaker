@@ -78,9 +78,9 @@
             android:layout_marginTop="36dp" />
     </LinearLayout>
 
-    <ProgressBar
+    <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/progressBar_main_checkin"
-        style="?android:attr/progressBarStyle"
+        style="@style/SpinKitView.FadingCircle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:max="100"
