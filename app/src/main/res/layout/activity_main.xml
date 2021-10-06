@@ -7,76 +7,109 @@
     android:paddingHorizontal="30dp"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout_main_info"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/main_tv_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar_main_checkin">
+        android:layout_marginTop="80dp"
+        android:text="@string/main_title"
+        android:textColor="@color/main_black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="14dp"
+        android:text="@string/main_description"
+        android:textAlignment="center"
+        android:textColor="@color/main_black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_tv_title" />
+
+    <View
+        android:id="@+id/main_v_safe_number_container"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/main_number_info_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_tv_content" />
+
+    <TextView
+        android:id="@+id/main_tv_personal_safe_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/main_number_info"
+        android:textColor="@color/main_black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/main_v_safe_number_container"
+        app:layout_constraintStart_toStartOf="@id/main_v_safe_number_container"
+        app:layout_constraintTop_toTopOf="@id/main_v_safe_number_container" />
+
+    <ImageView
+        android:id="@+id/main_iv_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/main_tv_personal_safe_number"
+        app:layout_constraintStart_toEndOf="@id/main_tv_personal_safe_number"
+        app:layout_constraintTop_toTopOf="@id/main_tv_personal_safe_number"
+        app:srcCompat="@drawable/ic_baseline_help_16" />
+
+    <TextView
+        android:id="@+id/tv_main_safe_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/main_black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/main_v_safe_number_container"
+        app:layout_constraintEnd_toEndOf="@id/main_v_safe_number_container"
+        app:layout_constraintTop_toTopOf="@id/main_v_safe_number_container"
+        tools:text="가12나34" />
+
+    <TextView
+        android:id="@+id/main_tv_check_in_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36dp"
+        android:text="@string/main_notice"
+        android:textColor="@color/main_black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_v_safe_number_container" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_title"
-            android:textColor="@color/main_black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal" />
+        android:id="@+id/main_tv_help_safe_number"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:background="@drawable/background_speech_bubble"
+        android:paddingHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="16dp"
+        android:text="@string/help_safe_number"
+        android:textAlignment="center"
+        android:textColor="@color/main_black"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/main_iv_help"
+        app:layout_constraintStart_toStartOf="@id/main_tv_personal_safe_number" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_description"
-            android:textColor="@color/main_black"
-            android:textSize="13sp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="13dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
-            android:background="@drawable/main_number_info_background"
-            android:gravity="center_vertical"
-            android:layout_marginTop="21dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/main_number_info"
-                android:textColor="@color/main_black"
-                android:textSize="15sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                app:srcCompat="@drawable/ic_baseline_help_16" />
-
-            <TextView
-                android:id="@+id/tv_main_safe_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:gravity="end"
-                tools:text="가12나34" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_notice"
-            android:textColor="@color/main_black"
-            android:textSize="16sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="36dp" />
-    </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/progressBar_main_checkin"
@@ -88,33 +121,33 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_main_checkin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_main_info" />
+        app:layout_constraintTop_toBottomOf="@id/main_tv_check_in_volume" />
 
     <Button
         android:id="@+id/btn_main_checkin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/sky_blue"
+        android:paddingVertical="12dp"
         android:text="@string/main_btn_start_checkin"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/sky_blue"
-        android:paddingVertical="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_main_checkin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_main_checkin" />
 
     <TextView
         android:id="@+id/tv_main_visit_record_history"
+        style="@style/Regular16Gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/visit_record_history"
-        style="@style/Regular16Gray"
+        android:layout_marginTop="8dp"
         android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/visit_record_history"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_main_checkin"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_main_checkin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

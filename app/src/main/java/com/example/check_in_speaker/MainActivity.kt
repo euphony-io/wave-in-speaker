@@ -88,6 +88,14 @@ class MainActivity : AppCompatActivity(){
             isClicked = it
         }
 
+        mainViewModel.isClickHelpButton.observe(this){
+            if(it){
+                binding.mainTvHelpSafeNumber.visibility = View.VISIBLE
+            }else{
+                binding.mainTvHelpSafeNumber.visibility = View.INVISIBLE
+            }
+        }
+
         mainViewModel.isValidSafeNumber.observe(this){
             if(it){
                 prefs.setString("safeNumber", dialogBinding!!.dialogEtSafeNumber.text.toString())
@@ -104,6 +112,10 @@ class MainActivity : AppCompatActivity(){
             }else{
                 requestGPSPermission()
             }
+        }
+
+        binding.mainIvHelp.setOnClickListener {
+            mainViewModel.onClickHelpButton()
         }
 
         binding.tvMainVisitRecordHistory.setOnClickListener {

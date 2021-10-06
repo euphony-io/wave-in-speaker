@@ -17,6 +17,10 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     val isValidSafeNumber: LiveData<Boolean>
       get() = _isValidSafeNumber
 
+    private val _isClickHelpButton = MutableLiveData(false)
+    val isClickHelpButton : LiveData<Boolean>
+        get() = _isClickHelpButton
+
     private val mTxManager: EuTxManager by lazy {
         EuTxManager()
     }
@@ -25,6 +29,10 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun onClickCheckInButton() {
         _isClickCheckInButton.value = _isClickCheckInButton.value != true
+    }
+
+    fun onClickHelpButton() {
+        _isClickHelpButton.value = _isClickHelpButton.value != true
     }
 
     private val safeNumberFormat = Regex("^[가-힣][0-9]{2}[가-힣][0-9]{2}\$")
