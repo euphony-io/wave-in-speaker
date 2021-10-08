@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         tools:text="2021-09-28 00:10" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
         tools:text="대한민국 서울특별시 서초구 우면동 성촌길33" />
 
