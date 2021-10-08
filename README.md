@@ -1,6 +1,6 @@
 # check-in-speaker
 
-![euphony_logo](https://user-images.githubusercontent.com/8490058/129358383-14b6f34d-9264-4c49-9538-3ef2e62a6490.png)
+<p align='center'><img src="https://user-images.githubusercontent.com/58473522/136589812-bcd3f6e7-d74b-4758-9f07-a991129b4fa7.png"  width="150" height="150"/></p>
 
 check-in-speaker는 방문하는 공간에 전자출입명부를 쉽게 남기도록 도와주는 앱이며 특히 코로나 바이러스 감염증(COVID-19) 기간동안 효과적으로 사용가능합니다.
 
