@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">check-in-speaker</string>
+    <string name="app_name">Wave-In</string>
     <string name="main_title">입장을 위한 음성 데이터</string>
     <string name="main_description">이용하려는 시설에 음성 데이터로 체크인하거나\n명부에 전화번호 대신 개인안심번호를 기재하세요.</string>
     <string name="main_number_info">개인안심번호</string>
